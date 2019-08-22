@@ -24,11 +24,28 @@
     <include layout="@layout/content_main"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/mini_fab_margin"
+            app:fabSize="mini"
+            android:clickable="true" app:srcCompat="@drawable/baseline_timer_white_24dp"
+            android:id="@+id/timerFAB" android:focusable="true" tools:srcCompat="@mipmap/ic_launcher"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/mini_fab_margin"
+            app:fabSize="mini"
+            android:clickable="true" app:srcCompat="@drawable/baseline_palette_white_24dp"
+            android:id="@+id/palletFAB" android:focusable="true"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_add" tools:srcCompat="@drawable/ic_add"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

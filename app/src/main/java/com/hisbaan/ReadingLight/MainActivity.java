@@ -2,15 +2,14 @@ package com.hisbaan.ReadingLight;
 
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,14 +17,51 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       FloatingActionButton fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
+        timerFAB = findViewById(R.id.timerFAB);
+        palletFAB = findViewById(R.id.palletFAB);
+        fab.setClickable(true);
+        fab.setFocusable(true);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if (!isFABOpen) {
+                    showFABMenu();
+                } else {
+                    closeFABMenu();
+                }
             }
         });
+
+        timerFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String message = "You just clicked the sleep timer button. This will be coming in the future";
+                Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
+        });
+    }
+
+
+    FloatingActionButton fab;
+    FloatingActionButton palletFAB;
+    FloatingActionButton timerFAB;
+
+    boolean isFABOpen = false;
+
+    private void showFABMenu() {
+        isFABOpen = true;
+        fab.animate().rotation(45);
+        palletFAB.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
+        timerFAB.animate().translationY(-getResources().getDimension(R.dimen.standard_105));
+    }
+
+    private void closeFABMenu() {
+        isFABOpen = false;
+        fab.animate().rotation(0);
+        palletFAB.animate().translationY(0);
+        timerFAB.animate().translationY(0);
     }
 
     @Override
