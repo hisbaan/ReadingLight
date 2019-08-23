@@ -4,14 +4,11 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.NumberPicker;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.larswerkman.holocolorpicker.*;
 
@@ -49,17 +46,17 @@ public class ColourPicker extends Activity {
         //To get the color
         picker.getColor();
 
-        int color = Color.TRANSPARENT;
+        int colour = Color.TRANSPARENT;
         Drawable background = MainActivity.coordinatorLayout.getBackground();
         if (background instanceof ColorDrawable)
-            color = ((ColorDrawable) background).getColor();
-        picker.setColor(color);
+            colour = ((ColorDrawable) background).getColor();
+        picker.setColor(colour);
 
         // adds listener to the colorpicker which is implemented in the activity
         picker.setOnColorChangedListener(new ColorPicker.OnColorChangedListener() {
             @Override
-            public void onColorChanged(int color) {
-                c = color;
+            public void onColorChanged(int colour) {
+                c = colour;
             }
         });
 

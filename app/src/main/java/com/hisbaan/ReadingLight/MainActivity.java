@@ -1,18 +1,25 @@
 package com.hisbaan.ReadingLight;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
+    static CoordinatorLayout coordinatorLayout;
+    FloatingActionButton fab;
+    FloatingActionButton palletFAB;
+    FloatingActionButton timerFAB;
+    FloatingActionButton settingsFAB;
+
+
+    boolean isFABOpen = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
         fab.setClickable(true);
         fab.setFocusable(true);
+
+        //Animate opening and closing of FAB shelf.
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -37,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Open sleep timer activity.
         timerFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,25 +56,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Open colour picker activity.
         palletFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                coordinatorLayout.setBackgroundColor(Color.parseColor("#ff0000"));
                 Intent i = new Intent(getApplicationContext(), ColourPicker.class);
                 startActivity(i);
             }
         });
     }
 
-    static CoordinatorLayout coordinatorLayout;
-    FloatingActionButton fab;
-    FloatingActionButton palletFAB;
-    FloatingActionButton timerFAB;
-    FloatingActionButton settingsFAB;
-
-
-    boolean isFABOpen = false;
-
+    //Opening animation for FAB shelf.
     private void showFABMenu() {
         isFABOpen = true;
         fab.animate().rotation(45);
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         settingsFAB.animate().translationY(-getResources().getDimension(R.dimen.standard_155));
     }
 
+    //Closing animation for FAB shelf.
     private void closeFABMenu() {
         isFABOpen = false;
         fab.animate().rotation(0);
@@ -81,25 +84,25 @@ public class MainActivity extends AppCompatActivity {
         settingsFAB.animate().translationY(0);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 }
