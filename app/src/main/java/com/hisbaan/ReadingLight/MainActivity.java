@@ -1,6 +1,9 @@
 package com.hisbaan.ReadingLight;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -14,12 +17,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         fab = findViewById(R.id.fab);
         timerFAB = findViewById(R.id.timerFAB);
         palletFAB = findViewById(R.id.palletFAB);
+        settingsFAB = findViewById(R.id.settingsFAB);
+        coordinatorLayout = findViewById(R.id.coordinatorLayout);
+
         fab.setClickable(true);
         fab.setFocusable(true);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -41,12 +45,23 @@ public class MainActivity extends AppCompatActivity {
                 snackbar.show();
             }
         });
+
+        palletFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                coordinatorLayout.setBackgroundColor(Color.parseColor("#ff0000"));
+                Intent i = new Intent(getApplicationContext(), ColourPicker.class);
+                startActivity(i);
+            }
+        });
     }
 
-
+    static CoordinatorLayout coordinatorLayout;
     FloatingActionButton fab;
     FloatingActionButton palletFAB;
     FloatingActionButton timerFAB;
+    FloatingActionButton settingsFAB;
+
 
     boolean isFABOpen = false;
 
@@ -55,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         fab.animate().rotation(45);
         palletFAB.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
         timerFAB.animate().translationY(-getResources().getDimension(R.dimen.standard_105));
+        settingsFAB.animate().translationY(-getResources().getDimension(R.dimen.standard_155));
     }
 
     private void closeFABMenu() {
@@ -62,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         fab.animate().rotation(0);
         palletFAB.animate().translationY(0);
         timerFAB.animate().translationY(0);
+        settingsFAB.animate().translationY(0);
     }
 
     @Override
