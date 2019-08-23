@@ -41,8 +41,6 @@ public class ColourPicker extends Activity {
         picker.addSVBar(svBar);
         picker.setShowOldCenterColor(false);
 
-
-
         //To get the color
         picker.getColor();
 
@@ -52,7 +50,7 @@ public class ColourPicker extends Activity {
             colour = ((ColorDrawable) background).getColor();
         picker.setColor(colour);
 
-        // adds listener to the colorpicker which is implemented in the activity
+        //Adds listener to the colour picker which is implemented in the activity
         picker.setOnColorChangedListener(new ColorPicker.OnColorChangedListener() {
             @Override
             public void onColorChanged(int colour) {
@@ -60,17 +58,27 @@ public class ColourPicker extends Activity {
             }
         });
 
+        //Choose colour and close activity when select button is pressed.
         Button select = findViewById(R.id.selectButton);
         select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int colour = c;
                 MainActivity.coordinatorLayout.setBackgroundColor(Color.rgb(Color.red(colour), Color.green(colour), Color.blue(colour)));
-
+                finish();
             }
         });
 
-        //to turn of showing the old color
+        //Do not choose colour and close activity when cancel button is pressed.
+        Button cancel = findViewById(R.id.cancelButton);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        //Turns off showing old colour
         picker.setShowOldCenterColor(false);
 
 //        adding onChangeListeners to bars
