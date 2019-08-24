@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -15,6 +16,8 @@ import com.larswerkman.holocolorpicker.*;
 public class ColourPicker extends Activity {
 
     int c;
+    Button select;
+    Button cancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +58,21 @@ public class ColourPicker extends Activity {
             @Override
             public void onColorChanged(int colour) {
                 c = colour;
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        // TODO Auto-generated method stub
+
+                        select.setTextColor(Color.rgb(Color.red(c), Color.green(c), Color.blue(c)));
+                        cancel.setTextColor(Color.rgb(Color.red(c), Color.green(c), Color.blue(c)));
+                    }
+                }, 0);
             }
         });
 
         //Choose colour and close activity when select button is pressed.
-        Button select = findViewById(R.id.selectButton);
+        select = findViewById(R.id.selectButton);
         select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,7 +83,7 @@ public class ColourPicker extends Activity {
         });
 
         //Do not choose colour and close activity when cancel button is pressed.
-        Button cancel = findViewById(R.id.cancelButton);
+        cancel = findViewById(R.id.cancelButton);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
