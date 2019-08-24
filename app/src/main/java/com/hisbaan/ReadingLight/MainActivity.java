@@ -1,7 +1,15 @@
 package com.hisbaan.ReadingLight;
 
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.widget.SeekBar;
+import android.widget.Toast;
+import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,12 +19,16 @@ import android.view.MenuItem;
 import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
+
     static CoordinatorLayout coordinatorLayout;
+
     FloatingActionButton fab;
     FloatingActionButton palletFAB;
     FloatingActionButton timerFAB;
     FloatingActionButton settingsFAB;
 
+    SeekBar brightnessBar;
+    Boolean success = false;
 
     boolean isFABOpen = false;
 
@@ -31,8 +43,11 @@ public class MainActivity extends AppCompatActivity {
         settingsFAB = findViewById(R.id.settingsFAB);
         coordinatorLayout = findViewById(R.id.coordinatorLayout);
 
-        fab.setClickable(true);
-        fab.setFocusable(true);
+        brightnessBar = findViewById(R.id.brightnessBar);
+        brightnessBar.setMax(255);
+        brightnessBar.setProgress(getBrightness());
+
+        getPermission();
 
         //Animate opening and closing of FAB shelf.
         fab.setOnClickListener(new View.OnClickListener() {
@@ -64,9 +79,75 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        brightnessBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (fromUser && success) {
+                    setBrightness(progress);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                if (!success) {
+                    Toast.makeText(MainActivity.this, "Permission not granted!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
-    //Opening animation for FAB shelf.
+    private void setBrightness(int brightness) {
+        if (brightness < 0) brightness = 0;
+        else if (brightness > 255) brightness = 0;
+
+        ContentResolver contentResolver = getApplicationContext().getContentResolver();
+        Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS, brightness);
+    }
+
+    private int getBrightness() {
+        int brightness = 0;
+
+//        try {
+        ContentResolver contentResolver = getApplicationContext().getContentResolver();
+        brightness = Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS, brightness);
+//        } catch (Settings.SettingNotFoundException e) {
+//            e.printStackTrace();
+//        }
+
+        return brightness;
+    }
+
+    private void getPermission() {
+        boolean value;
+        value = Settings.System.canWrite(getApplicationContext());
+        if (value) {
+            success = true;
+        } else {
+            Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+            intent.setData(Uri.parse("package:" + getApplicationContext().getPackageName()));
+            startActivityForResult(intent, 1000);
+        }
+    }    
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 1000) {
+            boolean value = Settings.System.canWrite(getApplicationContext());
+            if (value) {
+                success = true;
+            } else {
+                Toast.makeText(this, "Permission not granted!", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    }
+
     private void showFABMenu() {
         isFABOpen = true;
         fab.animate().rotation(45);
