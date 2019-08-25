@@ -1,10 +1,8 @@
 package com.hisbaan.ReadingLight;
 
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.SeekBar;
@@ -49,6 +47,17 @@ public class MainActivity extends AppCompatActivity {
 
         getPermission();
 
+        //turn autobrighness off or tell the user to
+        //if you do turn it off, inform the user that auto brightness has been turned off so that they know using a snackbar where they can then undo.
+
+        ContentResolver contentResolver = getApplicationContext().getContentResolver();
+
+        if (Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC) == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC) {
+            Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+
+            Toast.makeText(this, "Auto-Brightness has been turned off as this causes problems with the app.", Toast.LENGTH_LONG).show();
+        }
+
         //Animate opening and closing of FAB shelf.
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,9 +74,8 @@ public class MainActivity extends AppCompatActivity {
         timerFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String message = "You just clicked the sleep timer button. This will be coming in the future";
-                Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
-                snackbar.show();
+                Intent i = new Intent(getApplicationContext(), SleepTimer.class);
+                startActivity(i);
             }
         });
 
@@ -133,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
             intent.setData(Uri.parse("package:" + getApplicationContext().getPackageName()));
             startActivityForResult(intent, 1000);
         }
-    }    
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

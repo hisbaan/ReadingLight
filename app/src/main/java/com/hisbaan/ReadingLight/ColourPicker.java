@@ -15,9 +15,14 @@ import com.larswerkman.holocolorpicker.*;
 
 public class ColourPicker extends Activity {
 
+    ColorPicker picker;
     int c;
     Button select;
     Button cancel;
+    Button colourButton1;
+    Button colourButton2;
+    Button colourButton3;
+    Button colourButton4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +43,7 @@ public class ColourPicker extends Activity {
 
         getWindow().setAttributes(params);
 
-        ColorPicker picker = findViewById(R.id.picker);
+        picker = findViewById(R.id.picker);
         SVBar svBar = findViewById(R.id.svbar);
 
         picker.addSVBar(svBar);
@@ -56,14 +61,15 @@ public class ColourPicker extends Activity {
         //Adds listener to the colour picker which is implemented in the activity
         picker.setOnColorChangedListener(new ColorPicker.OnColorChangedListener() {
             @Override
-            public void onColorChanged(int colour) {
-                c = colour;
+            public void onColorChanged(int i) {
+                c = i;
                 new Handler().postDelayed(new Runnable() {
 
                     @Override
                     public void run() {
                         // TODO Auto-generated method stub
 
+                        //sets the colour of the buttons to the currently chosen colour.
                         select.setTextColor(Color.rgb(Color.red(c), Color.green(c), Color.blue(c)));
                         cancel.setTextColor(Color.rgb(Color.red(c), Color.green(c), Color.blue(c)));
                     }
@@ -88,6 +94,38 @@ public class ColourPicker extends Activity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        colourButton1 = findViewById(R.id.colourButton1);
+        colourButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                picker.setColor(Color.parseColor("#FFFFFF"));
+            }
+        });
+
+        colourButton2 = findViewById(R.id.colourButton2);
+        colourButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                picker.setColor(Color.parseColor("#FFD180"));
+            }
+        });
+
+        colourButton3 = findViewById(R.id.colourButton3);
+        colourButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                picker.setColor(Color.parseColor("#FFB74D"));
+            }
+        });
+
+        colourButton4 = findViewById(R.id.colourButton4);
+        colourButton4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                picker.setColor(Color.parseColor("#FFAB00"));
             }
         });
 

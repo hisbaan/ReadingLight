@@ -61,7 +61,7 @@
             tools:srcCompat="@drawable/ic_add"/>
 
     <SeekBar
-            android:layout_width="325dp"
+            android:layout_width="255dp"
             android:layout_height="wrap_content"
             android:layout_gravity="top|center_horizontal"
             android:layout_marginTop="@dimen/fab_margin"

@@ -11,52 +11,68 @@
             android:id="@+id/picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="4dp" app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="52dp"
+            app:layout_constraintStart_toEndOf="@+id/colourButton2"
+            app:layout_constraintEnd_toEndOf="@+id/colourButton2"/>
     <com.larswerkman.holocolorpicker.SVBar
             android:id="@+id/svbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@+id/picker"
-            android:layout_marginStart="8dp" app:layout_constraintTop_toBottomOf="@+id/picker"/>
-        <Button
-                android:text="@string/select_button_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/selectButton"
-                android:background="#0000"
-                android:layout_marginTop="36dp"
-                app:layout_constraintTop_toBottomOf="@+id/svbar"
-                android:layout_marginEnd="36dp"
-                app:layout_constraintEnd_toEndOf="parent"/>
-        <Button
-                android:text="@string/decline_button_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/cancelButton"
-                android:background="#0000"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="36dp"
-                android:layout_marginStart="36dp"
-                app:layout_constraintTop_toBottomOf="@+id/svbar"/>
-<!--    <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/selectButton"-->
-<!--            style="@style/Widget.MaterialComponents.Button.TextButton"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/select_button_text"-->
-<!--            android:background="#333333"-->
-<!--            android:layout_marginTop="13dp"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/svbar" android:layout_marginEnd="38dp"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"/>-->
-<!--    <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/cancelButton"-->
-<!--            style="@style/Widget.MaterialComponents.Button.TextButton"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/decline_button_text"-->
-<!--            android:background="#333333"-->
-<!--            app:layout_constraintStart_toStartOf="@+id/svbar"-->
-<!--            android:layout_marginTop="13dp" app:layout_constraintTop_toBottomOf="@+id/svbar"/>-->
-
+            app:layout_constraintStart_toStartOf="@+id/picker" android:layout_marginTop="4dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/picker"/>
+    <Button
+            android:text="@string/select_button_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/selectButton"
+            android:background="#0000"
+            app:layout_constraintTop_toTopOf="@+id/svbar" android:layout_marginTop="24dp"
+            android:layout_marginEnd="36dp"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    <Button
+            android:text="@string/decline_button_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cancelButton"
+            android:background="#0000"
+            app:layout_constraintTop_toTopOf="@+id/svbar" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="24dp" android:layout_marginStart="36dp"/>
+    <Button
+            android:text=""
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:id="@+id/colourButton1"
+            android:background="#FFFFFF"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="50dp" app:layout_constraintBaseline_toBaselineOf="@+id/colourButton2"
+            app:layout_constraintEnd_toStartOf="@+id/colourButton2"/>
+    <Button
+            android:text=""
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/colourButton2"
+            android:background="#FFD180"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toEndOf="@+id/colourButton1"
+            app:layout_constraintEnd_toStartOf="@+id/colourButton3" android:layout_marginBottom="7dp"
+            app:layout_constraintBottom_toTopOf="@+id/picker" app:layout_constraintTop_toTopOf="parent"/>
+    <Button
+            android:text=""
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:id="@+id/colourButton3"
+            android:background="#FFB74D"
+            app:layout_constraintBaseline_toBaselineOf="@+id/colourButton2"
+            app:layout_constraintStart_toEndOf="@+id/colourButton2"
+            app:layout_constraintEnd_toStartOf="@+id/colourButton4"/>
+    <Button
+            android:text=""
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:id="@+id/colourButton4"
+            android:background="#FFAB00"
+            app:layout_constraintBaseline_toBaselineOf="@+id/colourButton3"
+            app:layout_constraintStart_toEndOf="@+id/colourButton3" android:layout_marginEnd="50dp"
+            app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
