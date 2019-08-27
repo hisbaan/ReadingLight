@@ -7,4 +7,96 @@
         android:layout_height="match_parent"
         android:background="#333333"
         tools:context=".SleepTimer">
+    <TextView
+            android:id="@+id/text_view_countdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textSize="60sp"
+            android:textColor="@android:color/white"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="123dp" app:layout_constraintEnd_toEndOf="parent"/>
+    <Button
+            android:id="@+id/button_start_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="start"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_countdown"/>
+    <Button
+            android:id="@+id/button_reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="reset"
+            android:visibility="invisible"
+            tools:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_start_pause"/>
+    <!--    <EditText-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="144dp"-->
+    <!--            android:inputType="number"-->
+    <!--            android:ems="10"-->
+    <!--            android:id="@+id/editText2"-->
+    <!--            tools:layout_editor_absoluteY="41dp"/>-->
+    <!--    <EditText-->
+    <!--            android:layout_width="124dp"-->
+    <!--            android:layout_height="18dp"-->
+    <!--            android:inputType=""-->
+    <!--            android:text="@string/sleep_timer"-->
+    <!--            android:ems="10"-->
+    <!--            android:id="@+id/title"-->
+    <!--            tools:layout_editor_absoluteY="16dp" tools:layout_editor_absoluteX="118dp"/>-->
+    <!--    <Button-->
+    <!--            android:text="@string/plus1"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:id="@+id/plus1" android:layout_marginTop="42dp"-->
+    <!--            app:layout_constraintStart_toEndOf="@+id/editText2"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent"-->
+    <!--            android:layout_marginEnd="14dp"-->
+    <!--    />-->
+    <!--    <Button-->
+    <!--            android:text="@string/plus5"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:id="@+id/plus5"-->
+    <!--            app:layout_constraintStart_toStartOf="@+id/plus1"-->
+    <!--            app:layout_constraintTop_toBottomOf="@+id/plus1"/>-->
+    <!--    <Button-->
+    <!--            android:text="@string/plus10"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:id="@+id/plus10"-->
+    <!--            app:layout_constraintTop_toBottomOf="@+id/plus5"-->
+    <!--            android:layout_marginEnd="2dp"-->
+    <!--            app:layout_constraintEnd_toEndOf="@+id/plus5"/>-->
+    <!--    <Button-->
+    <!--            android:text="@string/minus1"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:id="@+id/minus1" android:layout_marginTop="42dp"-->
+    <!--            app:layout_constraintEnd_toStartOf="@+id/editText2"-->
+    <!--            app:layout_constraintTop_toTopOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            android:layout_marginStart="14dp"-->
+    <!--            android:layout_marginEnd="5dp"/>-->
+    <!--    <Button-->
+    <!--            android:text="@string/minus5"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:id="@+id/minus5"-->
+    <!--            app:layout_constraintStart_toStartOf="@+id/minus1"-->
+    <!--            app:layout_constraintTop_toBottomOf="@+id/minus1"/>-->
+    <!--    <Button-->
+    <!--            android:text="@string/minus10"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:id="@+id/minus10"-->
+    <!--            app:layout_constraintStart_toStartOf="@+id/minus5"-->
+    <!--            android:layout_marginTop="1dp"-->
+    <!--            app:layout_constraintTop_toBottomOf="@+id/minus5"/>-->
 </androidx.constraintlayout.widget.ConstraintLayout>
