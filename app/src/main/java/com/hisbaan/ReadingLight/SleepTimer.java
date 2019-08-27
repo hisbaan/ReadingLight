@@ -21,8 +21,6 @@ public class SleepTimer extends AppCompatActivity {
     private Button buttonStartPause;
     private Button buttonReset;
 
-    com.hisbaan.ReadingLight.CountDownTimer service = new com.hisbaan.ReadingLight.CountDownTimer();
-
     private CountDownTimer countDownTimer;
     private boolean timerRunning;
     private long timeLeftInMillis = startTimeInMillis;
@@ -153,9 +151,8 @@ public class SleepTimer extends AppCompatActivity {
                 timerRunning = false;
                 updateButtons();
             }
-        };
+        }.start();
 
-        countDownTimer.start();
         timerRunning = true;
         updateButtons();
     }
@@ -200,29 +197,29 @@ public class SleepTimer extends AppCompatActivity {
             }
         }
     }
-//
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        outState.putLong("millisLeft", timeLeftInMillis);
-//        outState.putBoolean("timerRunning", timerRunning);
-//        outState.putLong("endTime", endTime);
-//    }
-//
-//    @Override
-//    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-//        super.onRestoreInstanceState(savedInstanceState);
-//        timeLeftInMillis = savedInstanceState.getLong("millisLeft");
-//        timerRunning = savedInstanceState.getBoolean("timerRunning");
-//        updateCountdownText();
-//        updateButtons();
-//
-//        if(timerRunning) {
-//            endTime = savedInstanceState.getLong("endTime");
-//            timeLeftInMillis = endTime - System.currentTimeMillis();
-//            startTimer();
-//        }
-//    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putLong("millisLeft", timeLeftInMillis);
+        outState.putBoolean("timerRunning", timerRunning);
+        outState.putLong("endTime", endTime);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        timeLeftInMillis = savedInstanceState.getLong("millisLeft");
+        timerRunning = savedInstanceState.getBoolean("timerRunning");
+        updateCountdownText();
+        updateButtons();
+
+        if(timerRunning) {
+            endTime = savedInstanceState.getLong("endTime");
+            timeLeftInMillis = endTime - System.currentTimeMillis();
+            startTimer();
+        }
+    }
 
 
 }

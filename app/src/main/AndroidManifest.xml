@@ -18,7 +18,7 @@
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
         <service
-                android:name=".CountDownTimer"
+                android:name=".CountdownTimerService"
                 android:enabled="true"
                 android:exported="true">
         </service>
