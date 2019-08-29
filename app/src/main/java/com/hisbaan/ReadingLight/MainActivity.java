@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Boolean success = false;
 
     boolean isFABOpen = false;
+    boolean autoBrightnessTurnedOff = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,16 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         getPermission();
 
-        //turn autobrighness off or tell the user to
-        //if you do turn it off, inform the user that auto brightness has been turned off so that they know using a snackbar where they can then undo.
-
-        ContentResolver contentResolver = getApplicationContext().getContentResolver();
-
-        if (Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC) == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC) {
-            Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
-
-            Toast.makeText(this, "Auto-Brightness has been turned off as this causes problems with the app.", Toast.LENGTH_LONG).show();
-        }
+        disableAutoBrightness();
 
         //Animate opening and closing of FAB shelf.
         fab.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +100,32 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (autoBrightnessTurnedOff) {
+            ContentResolver contentResolver = getApplicationContext().getContentResolver();
+            Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        disableAutoBrightness();
+    }
+
+    private void disableAutoBrightness() {
+        ContentResolver contentResolver = getApplicationContext().getContentResolver();
+
+        if (Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC) == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC) {
+            Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+            autoBrightnessTurnedOff = true;
+        }
     }
 
     private void setBrightness(int brightness) {

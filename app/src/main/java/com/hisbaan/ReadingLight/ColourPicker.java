@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.os.Bundle;
 import com.larswerkman.holocolorpicker.*;
 
-public class ColourPicker extends Activity {
+public class ColourPicker extends MainActivity {
 
     ColorPicker picker;
     int c;
