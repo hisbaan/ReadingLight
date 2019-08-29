@@ -1,29 +1,33 @@
 package com.hisbaan.ReadingLight;
 
+import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethod;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
-import androidx.annotation.NonNull;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import java.util.Locale;
 
 public class SleepTimer extends AppCompatActivity {
-
-    private static long startTimeInMillis = 600000;
-
+    private EditText editTextInput;
     private TextView textViewCountdown;
+    private Button buttonSet;
     private Button buttonStartPause;
     private Button buttonReset;
 
     private CountDownTimer countDownTimer;
     private boolean timerRunning;
-    private long timeLeftInMillis = startTimeInMillis;
+    private long startTimeInMillis;
+    private long timeLeftInMillis;
     private long endTime;
 
 
@@ -35,7 +39,6 @@ public class SleepTimer extends AppCompatActivity {
     Button minus1;
     Button minus5;
     Button minus10;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +64,31 @@ public class SleepTimer extends AppCompatActivity {
 
         getWindow().setAttributes(params);
 
+        editTextInput = findViewById(R.id.edit_text_input);
         textViewCountdown = findViewById(R.id.text_view_countdown);
+
+        buttonSet = findViewById(R.id.button_set);
         buttonStartPause = findViewById(R.id.button_start_pause);
         buttonReset = findViewById(R.id.button_reset);
+
+        buttonSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String input = editTextInput.getText().toString();
+                if (input.length() == 0) {
+                    Toast.makeText(SleepTimer.this, "Field can't be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                long millisInput = Long.parseLong(input) * 60000;
+                if (millisInput == 0) {
+                    Toast.makeText(SleepTimer.this, "Please enter a positive number", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                setTime(millisInput);
+            }
+        });
 
         buttonStartPause.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,8 +107,6 @@ public class SleepTimer extends AppCompatActivity {
                 resetTimer();
             }
         });
-
-        updateCountdownText();
 
         //Button to add 1, 5, and 10 minutes. Also buttons to remove the same amount of time.
 //        plus1 = findViewById(R.id.plus1);
@@ -136,6 +159,12 @@ public class SleepTimer extends AppCompatActivity {
         //timeRemaining counts down. when it does, the keep screen on flag is turned off so the screen will turn off on its own.
     }
 
+    private void setTime(long milliseconds) {
+        startTimeInMillis = milliseconds;
+        resetTimer();
+        closeKeyboard();
+    }
+
     private void startTimer() {
         endTime = System.currentTimeMillis() + timeLeftInMillis;
 
@@ -149,39 +178,54 @@ public class SleepTimer extends AppCompatActivity {
             @Override
             public void onFinish() {
                 timerRunning = false;
-                updateButtons();
+                updateInterface();
             }
         }.start();
 
         timerRunning = true;
-        updateButtons();
+        updateInterface();
     }
 
     private void pauseTimer() {
         countDownTimer.cancel();
         timerRunning = false;
-        updateButtons();
+        updateInterface();
 
     }
 
     private void resetTimer() {
         timeLeftInMillis = startTimeInMillis;
         updateCountdownText();
-        updateButtons();
+        updateInterface();
+        countDownTimer.cancel();
     }
 
     private void updateCountdownText() {
-        int minutes = (int) (timeLeftInMillis / 1000) / 60;
+        int hours = (int) (timeLeftInMillis / 1000) / 3600;
+        int minutes = (int) ((timeLeftInMillis / 1000) % 3600) / 60;
         int seconds = (int) (timeLeftInMillis / 1000) % 60;
 
-        textViewCountdown.setText(String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds));
+        String timeLeftFormatted;
+
+//        if (hours > 0) {
+            timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
+//        } else {
+//            timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+//        }
+
+        textViewCountdown.setText(timeLeftFormatted);
     }
 
-    private void updateButtons() {
+    private void updateInterface() {
         if (timerRunning) {
+            editTextInput.setVisibility(View.INVISIBLE);
+            buttonSet.setVisibility(View.INVISIBLE);
             buttonReset.setVisibility(View.INVISIBLE);
             buttonStartPause.setText("pause");
         } else {
+            editTextInput.setVisibility(View.VISIBLE);
+            buttonSet.setVisibility(View.VISIBLE);
+
             buttonStartPause.setText("start");
 
             if (timeLeftInMillis < 1000) {
@@ -198,28 +242,60 @@ public class SleepTimer extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putLong("millisLeft", timeLeftInMillis);
-        outState.putBoolean("timerRunning", timerRunning);
-        outState.putLong("endTime", endTime);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        timeLeftInMillis = savedInstanceState.getLong("millisLeft");
-        timerRunning = savedInstanceState.getBoolean("timerRunning");
-        updateCountdownText();
-        updateButtons();
-
-        if(timerRunning) {
-            endTime = savedInstanceState.getLong("endTime");
-            timeLeftInMillis = endTime - System.currentTimeMillis();
-            startTimer();
+    private void closeKeyboard() {
+        View view = this.getCurrentFocus();
+        if(view != null) {
+            InputMethodManager imm  = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            assert imm != null;
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
 
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putLong("startTimeInMillis", startTimeInMillis);
+        editor.putLong("millisLeft", timeLeftInMillis);
+        editor.putBoolean("timerRunning", timerRunning);
+        editor.putLong("endTime", endTime);
+
+        editor.apply();
+
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        startTimeInMillis = prefs.getLong("startTimeInMillis", 60000);
+        timeLeftInMillis = prefs.getLong("millisLeft", startTimeInMillis);
+        timerRunning = prefs.getBoolean("timerRunning", false);
+
+        updateCountdownText();
+        updateInterface();
+
+        if (timerRunning) {
+            endTime = prefs.getLong("endTime", 0);
+            timeLeftInMillis = endTime - System.currentTimeMillis();
+            startTimer();
+
+            if (timeLeftInMillis < 0) {
+                timeLeftInMillis = 0;
+                timerRunning = false;
+                updateCountdownText();
+                updateInterface();
+            } else {
+                startTimer();
+            }
+        }
+
+    }
 }
