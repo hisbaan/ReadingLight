@@ -1,50 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.hisbaan.ReadingLight"
-          android:versionCode="1"
-          android:versionName="1.0">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.hisbaan.ReadingLight"
+    android:versionCode="1"
+    android:versionName="1.0">
 
     <uses-permission
-            android:name="android.permission.WRITE_SETTINGS"
-            tools:ignore="ProtectedPermissions"/>
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
 
     <application
-            android:name=".App"
-            android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme"
-            tools:ignore="GoogleAppIndexingWarning">
+        android:name=".App"
+        android:allowBackup="true"
+        android:fullBackupContent="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <service
-                android:name=".CountdownTimerService"
-                android:enabled="true"
-                android:exported="true">
-        </service>
+            android:name=".CountdownTimerService"
+            android:enabled="true"
+            android:exported="false" />
 
         <activity
-                android:name=".MainActivity"
-                android:label="@string/app_name"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar">
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-                android:name=".SleepTimer"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.PopUp">
-        </activity>
+            android:name=".SleepTimer"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme.PopUp" />
         <activity
-                android:name=".ColourPicker"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.PopUp">
-        </activity>
+            android:name=".ColourPicker"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme.PopUp" />
     </application>
 
 </manifest>
